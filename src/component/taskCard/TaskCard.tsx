@@ -8,11 +8,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Ttask } from "../types/Types";
 import { cn } from "@/lib/utils";
+import { useAppDispatch } from "@/Redux/app/hook";
+import { deleteTask, isComplete } from "@/Redux/featured/Todo/todoSlice";
 
 type TaskCardProps = {
   task: Ttask; 
 };
 export default function TaskCard({task }:TaskCardProps) {
+  const dispatch = useAppDispatch()
   return (
     <Card className="flex justify-between ">
       <div>
@@ -26,7 +29,7 @@ export default function TaskCard({task }:TaskCardProps) {
 
             </div>
           </CardTitle>
-          <CardDescription>{task.title}</CardDescription>
+          <CardDescription className={cn({'line-through' : task.completed} )}>{task.title}</CardDescription>
           <CardDescription>{task.description}</CardDescription>
         </CardHeader>
       </div>
@@ -34,9 +37,9 @@ export default function TaskCard({task }:TaskCardProps) {
         <CardHeader>
           <CardTitle className="flex  space-x-3 items-center ">
             <div>
-              <Button >delete</Button>
+              <Button onClick={()=>dispatch(deleteTask(task.id as string))} >delete</Button>
             </div>
-            <Checkbox />
+            <Checkbox checked={task.completed} onClick={()=>dispatch(isComplete(task.id as string))} />
           </CardTitle>
         </CardHeader>
       </div>

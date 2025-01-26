@@ -9,5 +9,5 @@ export interface Ttask {
 }
 
 export interface IFilter {
-  filter: "High" | "Medium" | "Low";
+  filter: "all"|"High" | "Medium" | "Low";
 }
